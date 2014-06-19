@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+    <definition name="template" template="/WEB-INF/views/main_template.jsp">
+        <!--<put-attribute name="top"-->
+                       <!--value="/WEB-INF/views/tiles/header.jsp"/>-->
+    </definition>
+
+    <definition name="login_template" template="/WEB-INF/views/login_template.jsp">
+        <!--<put-attribute name="top"-->
+                       <!--value="/WEB-INF/views/tiles/header.jsp"/>-->
+    </definition>
+
+    <definition name="home" extends="template">
+        <put-attribute name="content"
+                       value="/WEB-INF/views/home.jsp" />
+    </definition>
+
+    <definition name="sent" extends="template">
+        <put-attribute name="content"
+                       value="/WEB-INF/views/sent.jsp" />
+    </definition>
+
+    <definition name="manage_devices" extends="template">
+        <put-attribute name="content"
+                       value="/WEB-INF/views/manage_devices.jsp" />
+    </definition>
+
+    <definition name="login" extends="login_template">
+        <put-attribute name="content"
+                       value="/WEB-INF/views/login.jsp" />
+    </definition>
+</tiles-definitions>
