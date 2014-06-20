@@ -53,35 +53,29 @@ public class AsyncSender {
     }
 
 
-    public String sendAll() throws ParseException, IOException {
-//        List<String> devices = Datastore.getDevices();
+    public String sendAll(Message message) throws ParseException, IOException {
+        List<Device> devices = new LinkedList<>();
 
         // Get all devices of user with id 9999
         CriteriaBuilder queryBuilder = em.getCriteriaBuilder();
         CriteriaQuery<User> criteria = queryBuilder.createQuery(User.class);
         Root<User> userRoot = criteria.from(User.class);
         criteria.select(userRoot);
-
         criteria.where(queryBuilder.equal(userRoot.get(User_.userId), 9999l));
-
         List<User> userQueried = em.createQuery(criteria).getResultList();
-
-        List<Device> devices = new LinkedList<>();
-
         for (User user : userQueried) {
             devices.addAll(user.getDeviceList());
         }
 
         String status;
         if (devices.isEmpty()) {
-            status = "Message ignored as there is no device registered!";
+            status = "Message ignored as there are no devices registered!";
         } else {
             // NOTE: check below is for demonstration purposes; a real application
             // could always send a multicast, even for just one recipient
             if (devices.size() == 1) {
                 // send a single message using plain post
                 String registrationId = devices.get(0).getDeviceId();
-                Message message = new Message.Builder().build();
                 Result result = sender.send(message, registrationId, 5);
                 status = "Sent message to one device: " + result;
             } else {
@@ -96,31 +90,26 @@ public class AsyncSender {
                     partialDevices.add(device);
                     int partialSize = partialDevices.size();
                     if (partialSize == MULTICAST_SIZE || counter == total) {
-                        asyncSend(partialDevices);
+                        asyncSend(partialDevices, message);
                         partialDevices.clear();
                         tasks++;
                     }
                 }
-                status = "Asynchronously sending " + tasks + " multicast messages to " +
-                        total + " devices";
+                status = "Sending message to " + total + " devices";
             }
         }
 
         return status.toString();
     }
 
-    private void asyncSend(List<Device> partialDevices) {
+    private void asyncSend(List<Device> partialDevices, final Message message) {
         // make a copy
         final List<String> deviceIds = new LinkedList<>();
         for (Device device : partialDevices)
             deviceIds.add(device.getDeviceId());
+
         threadPool.execute(new Runnable() {
-
             public void run() {
-//        Message message = new Message.Builder().build();
-                User user = em.find(User.class, 9999L);
-                Message message = new Message.Builder().addData(user.getUserEmail(), user.getUserPassword()).build();
-
                 MulticastResult multicastResult;
                 try {
                     multicastResult = sender.send(message, deviceIds, 5);

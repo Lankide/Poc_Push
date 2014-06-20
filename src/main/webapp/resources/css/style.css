@@ -19,6 +19,57 @@
     padding-bottom: 20px;
 }
 
+/*Table style*/
+
+.table {
+    margin-bottom: 40px;
+}
+
+.table-fixedheader {
+    width: 100%;
+}
+
+.table-fixedheader,
+.table-fixedheader > thead,
+.table-fixedheader > tbody,
+.table-fixedheader > thead > tr,
+.table-fixedheader > tbody > tr,
+.table-fixedheader > thead > tr > th,
+.table-fixedheader > tbody > tr > td {
+    display: block;
+}
+
+.table-fixedheader > thead > tr:after,
+.table-fixedheader > tbody > tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+.table-fixedheader > tbody {
+    overflow: auto;
+    height: 500px;
+}
+
+.table-fixedheader > thead {
+    overflow: auto;
+}
+
+.table-fixedheader > thead::-webkit-scrollbar {
+    background-color: inherit;
+}
+
+.table-fixedheader > tbody > tr > td {
+    width: 180px;
+    float: left;
+}
+
+.table-fixedheader > thead > tr > th {
+    width: 20%;
+    float: left;
+}
+
 /*Navbar style*/
 
 .navbar {
@@ -101,7 +152,6 @@
     border-bottom-color: #FFFFFF
 }
 
-
 /*Button style class="btn-custom"*/
 
 .btn-custom {
@@ -148,4 +198,12 @@ fieldset[disabled] .btn-custom.active {
 .btn-custom .badge {
     color: #003366;
     background-color: #FFFFFF;
+}
+
+/*Alert style*/
+
+.alert-info{
+    background-color: #f7f7f7;
+    border-color: #ffffff;
+    color: #000000;
 }

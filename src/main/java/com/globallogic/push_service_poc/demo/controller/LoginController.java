@@ -20,8 +20,8 @@ import java.util.List;
 @Controller
 public class LoginController {
 
-    @RequestMapping(value = "/login",method = RequestMethod.GET)
-    public String printWelcome(){
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String printWelcome() {
         return "login";
     }
 }

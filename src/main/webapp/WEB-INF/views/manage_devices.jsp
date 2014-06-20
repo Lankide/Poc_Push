@@ -15,9 +15,7 @@
 
             <div class="col-md-8">
                 <select class="form-control input-md" id="userListRegister">
-                    <c:forEach var="user" items="${users}">
-                        <option value="${user.userId}">${user.userEmail}</option>
-                    </c:forEach>
+                    <option value="${user.userId}">${user.userEmail}</option>
                 </select>
             </div>
         </div>
@@ -50,9 +48,7 @@
 
             <div class="col-md-8">
                 <select class="form-control input-md" id="userListUnregister">
-                    <c:forEach var="user" items="${users}">
-                        <option value="${user.userId}">${user.userEmail}</option>
-                    </c:forEach>
+                    <option value="${user.userId}">${user.userEmail}</option>
                 </select>
             </div>
         </div>
@@ -62,11 +58,9 @@
 
             <div class="col-md-8">
                 <select class="form-control input-md" id="deviceList">
-                    <c:forEach var="user" items="${users}">
-                        <c:forEach var="device" items="${user.deviceList}">
-                            <option value="${device.deviceId}">
-                                ...${fn:substring(device.deviceId, fn:length(device.deviceId)-21, fn:length(device.deviceId)-1)}</option>
-                        </c:forEach>
+                    <c:forEach var="device" items="${user.deviceList}">
+                        <option value="${device.deviceId}">
+                            ...${fn:substring(device.deviceId, fn:length(device.deviceId)-21, fn:length(device.deviceId)-1)}</option>
                     </c:forEach>
                 </select>
             </div>

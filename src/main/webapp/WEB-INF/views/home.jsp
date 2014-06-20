@@ -13,49 +13,64 @@
 
 
 <div>
-    <c:forEach var="user" items="${users}">
-        <table class="table payment-table header-fixed">
-            <thead>
+    <div class="alert alert-info alert-dismissable" id="status" style="display:none;">
+        <button type="button" class="close" onclick="$('#status').hide()" aria-hidden="true">&times;</button>
+        <div id="status-message"></div>
+    </div>
+    <table class="table payment-table table-fixedheader">
+        <thead>
+        <tr>
+            <th>Invoice</th>
+            <th>Submitted</th>
+            <th>Completed</th>
+            <th>Payment ID</th>
+            <th>Amount</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <c:forEach var="invoice" items="${user.invoiceList}">
             <tr>
-                <th>Invoice</th>
-                <th>Submitted</th>
-                <th>Completed</th>
-                <th>Payment ID</th>
-                <th>Amount</th>
+                <td class="invoice-cell">${invoice.invoiceName}</td>
+                <td class="invoice-cell">${invoice.invoiceSubmittedTS}</td>
+                <td class="invoice-cell">${invoice.invoiceCompletedTS}</td>
+                <td class="invoice-cell"></td>
+                <td class="invoice-cell"></td>
             </tr>
-            </thead>
-            <tbody>
-
-            <c:forEach var="invoice" items="${user.invoiceList}">
+            <c:forEach var="payment" items="${invoice.invoicePaymentList}">
                 <tr>
-                    <td>${invoice.invoiceName}</td>
-                    <td>${invoice.invoiceSubmittedTS}</td>
-                    <td>${invoice.invoiceCompletedTS}</td>
-                    <td></td>
-                    <td></td>
+                    <td class="payment-cell"></td>
+                    <td class="payment-cell"></td>
+                    <td class="payment-cell"></td>
+                    <td class="payment-cell">${payment.paymentId}</td>
+                    <td class="payment-cell">${payment.amount}</td>
                 </tr>
-                <c:forEach var="payment" items="${invoice.invoicePaymentList}">
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>${payment.paymentId}</td>
-                        <td>${payment.amount}</td>
-                    </tr>
-                </c:forEach>
             </c:forEach>
+        </c:forEach>
 
-            </tbody>
-        </table>
+        </tbody>
+    </table>
 
-        <form action="<s:url value="/invoices/${user.userId}"/>" method="GET">
-            <div>
-                <label for="predict"></label>
-
-                <div>
-                    <input class="btn btn-custom" id="predict" type="submit" value="Predict & Send">
-                </div>
-            </div>
-        </form>
-    </c:forEach>
+    <div class="pull-right">
+        <input class="btn btn-custom" id="predict" value="Predict & Send">
+    </div>
 </div>
+
+<script>
+    $('#predict').click(function () {
+        $('#status').hide();
+        $.ajax({
+                    type: "POST",
+                    url: "<s:url value="/predictAndSend"/>",
+                    success: function (result) {
+                        $("#status-message").html(result.sentStatus);
+                        $('#status').show();
+                    },
+                    error: function () {
+                        $("#statusmessage").html("Server is unavailable");
+                        $('#status').show();
+                    }
+                }
+        )
+    })
+</script>
