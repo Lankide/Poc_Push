@@ -5,26 +5,26 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<form class="form-horizontal" id="register-device" action="" method="POST">
+<form class="form-horizontal" id="register-device" action="<s:url value="/device/register"/>" method="POST">
     <fieldset>
 
         <legend>Register device</legend>
 
         <div class="form-group">
-            <label class="col-md-4 control-label" for="userListRegister">Choose user:</label>
+            <label class="col-md-4 control-label" for="userIdRegister">Choose user:</label>
 
             <div class="col-md-8">
-                <select class="form-control input-md" id="userListRegister">
+                <select class="form-control input-md" id="userIdRegister" name="userId">
                     <option value="${user.userId}">${user.userEmail}</option>
                 </select>
             </div>
         </div>
 
         <div class="form-group">
-            <label class="col-md-4 control-label" for="deviceID">Enter ID:</label>
+            <label class="col-md-4 control-label" for="deviceId">Enter ID:</label>
 
             <div class="col-md-8">
-                <input class="form-control input-md" type="text" id="deviceID" name="deviceID">
+                <input class="form-control input-md" type="text" id="deviceId" name="deviceId">
             </div>
         </div>
 
@@ -38,7 +38,7 @@
     </fieldset>
 </form>
 
-<form class="form-horizontal" id="unregister-device" action="" method="POST">
+<form class="form-horizontal" id="unregister-device" action="<s:url value="/device/unregister"/>" method="POST">
     <fieldset>
 
         <legend>Unregister device</legend>
@@ -47,7 +47,7 @@
             <label class="col-md-4 control-label" for="userListUnregister">Choose user:</label>
 
             <div class="col-md-8">
-                <select class="form-control input-md" id="userListUnregister">
+                <select class="form-control input-md" id="userListUnregister" name="userId">
                     <option value="${user.userId}">${user.userEmail}</option>
                 </select>
             </div>
@@ -57,10 +57,18 @@
             <label class="col-md-4 control-label" for="deviceList">Choose device:</label>
 
             <div class="col-md-8">
-                <select class="form-control input-md" id="deviceList">
+                <select class="form-control input-md" id="deviceList" name="deviceId">
                     <c:forEach var="device" items="${user.deviceList}">
                         <option value="${device.deviceId}">
-                            ...${fn:substring(device.deviceId, fn:length(device.deviceId)-21, fn:length(device.deviceId)-1)}</option>
+                            <c:choose>
+                                <c:when test="${fn:length(device.deviceId) > 20}">
+                                    ...${fn:substring(device.deviceId, fn:length(device.deviceId)-21, fn:length(device.deviceId)-1)}
+                                </c:when>
+                                <c:otherwise>
+                                    ${device.deviceId}
+                                </c:otherwise>
+                            </c:choose>
+                        </option>
                     </c:forEach>
                 </select>
             </div>

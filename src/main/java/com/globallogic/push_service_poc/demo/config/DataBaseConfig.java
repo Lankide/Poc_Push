@@ -7,7 +7,9 @@ package com.globallogic.push_service_poc.demo.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.HashMap;
@@ -17,7 +19,7 @@ import java.util.Map;
 @EnableTransactionManagement
 public class DataBaseConfig {
 
-    @Bean(name = "entitymanager1")
+    @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
 
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
@@ -37,8 +39,13 @@ public class DataBaseConfig {
         return entityManagerFactoryBean;
     }
 
-
-
+    @Bean
+    public PlatformTransactionManager transactionManager(){
+        JpaTransactionManager transactionManager = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(
+                entityManagerFactoryBean().getObject() );
+        return transactionManager;
+    }
 
 /*
     @Bean

@@ -1,9 +1,6 @@
 package com.globallogic.push_service_poc.demo.config;
 
 import com.globallogic.push_service_poc.demo.server.ApiKeyInitializer;
-import com.globallogic.push_service_poc.demo.server.RegisterServlet;
-import com.globallogic.push_service_poc.demo.server.SendServlet;
-import com.globallogic.push_service_poc.demo.server.UnregisterServlet;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
@@ -32,17 +29,17 @@ public class AppInit implements WebApplicationInitializer {
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/");
 
-        ServletRegistration.Dynamic registerServlet = servletContext.addServlet("RegisterServlet", new RegisterServlet());
-        registerServlet.setLoadOnStartup(1);
-        registerServlet.addMapping("/register");
-
-        ServletRegistration.Dynamic sendServlet = servletContext.addServlet("SendServlet", new SendServlet());
-        sendServlet.setLoadOnStartup(1);
-        sendServlet.addMapping("/send");
-
-        ServletRegistration.Dynamic unregisterServlet = servletContext.addServlet("UnregisterServlet", new UnregisterServlet());
-        unregisterServlet.setLoadOnStartup(1);
-        unregisterServlet.addMapping("/unregister");
+//        ServletRegistration.Dynamic registerServlet = servletContext.addServlet("RegisterServlet", new RegisterServlet());
+//        registerServlet.setLoadOnStartup(1);
+//        registerServlet.addMapping("/register");
+//
+//        ServletRegistration.Dynamic sendServlet = servletContext.addServlet("SendServlet", new SendServlet());
+//        sendServlet.setLoadOnStartup(1);
+//        sendServlet.addMapping("/send");
+//
+//        ServletRegistration.Dynamic unregisterServlet = servletContext.addServlet("UnregisterServlet", new UnregisterServlet());
+//        unregisterServlet.setLoadOnStartup(1);
+//        unregisterServlet.addMapping("/unregister");
 
     }
 

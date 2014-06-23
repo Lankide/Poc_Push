@@ -23,7 +23,7 @@
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-left">
                     <li><a href="<s:url value="/home"/>">Invoice history</a></li>
-                    <li><a href="<s:url value="/manageDevices"/>">Manage Devices</a></li>
+                    <li><a href="<s:url value="/device/manage"/>">Manage Devices</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="<s:url value="/login"/>">Logout</a></li>
