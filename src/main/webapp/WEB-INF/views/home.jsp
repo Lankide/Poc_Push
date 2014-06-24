@@ -32,8 +32,8 @@
         <c:forEach var="invoice" items="${user.invoiceList}">
             <tr>
                 <td class="invoice-cell">${invoice.invoiceName}</td>
-                <td class="invoice-cell">${invoice.invoiceSubmittedTS}</td>
-                <td class="invoice-cell">${invoice.invoiceCompletedTS}</td>
+                <td class="invoice-cell"><fmt:formatDate pattern="dd-MM-yyyy"  value="${invoice.invoiceSubmittedTS}"/></td>
+                <td class="invoice-cell"><fmt:formatDate pattern="dd-MM-yyyy"  value="${invoice.invoiceCompletedTS}"/></td>
                 <td class="invoice-cell"></td>
                 <td class="invoice-cell"></td>
             </tr>

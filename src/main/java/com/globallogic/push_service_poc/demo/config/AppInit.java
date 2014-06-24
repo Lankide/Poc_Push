@@ -5,9 +5,11 @@ import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
 
 import javax.inject.Inject;
+import javax.servlet.Filter;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
@@ -45,9 +47,8 @@ public class AppInit implements WebApplicationInitializer {
 
     private AnnotationConfigWebApplicationContext getContext() {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-        context.setConfigLocation("com.globallogic.push_service_poc.demo.config.AppConfig");
+        context.setConfigLocations(new String[]{"com.globallogic.push_service_poc.demo.config.AppConfig",
+                "com.globallogic.push_service_poc.demo.config.SecurityConfig"});
         return context;
     }
-
-
 }

@@ -13,7 +13,7 @@
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet">
-    <title>Push Demo</title>
+    <title>Push Notifications</title>
 </head>
 
 <body>

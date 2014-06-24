@@ -72,18 +72,19 @@ public class dataPreparationIT {
         List<Invoice> invoicesList = new ArrayList<>();
         for (int i = 0; i < 25; i++) {
             List<Payment> paymentsList = new ArrayList<>();
-            for (int j = 0; j < 5; j++) {
-                Payment payment = new Payment(1111l + (long) (j + i * 5), (Double) (Math.random() * 50 + 1),
+            for (int j = 0; j < 3; j++) {
+                Payment payment = new Payment(1111l + (long) (j + i * 3), (Double) (Math.random() * 50 + 1),
                         new RandomDateOfTransaction().prepareDate(2012, 2013),
                         new RandomDateOfTransaction().prepareDate(2012, 2013));
                 paymentsList.add(payment);
                 em.persist(payment);
             }
-            Invoice invoice = new Invoice((long) (i + 1), "testInvoice", 1d, new SequentialRandomDayPopulation().prepareDate(i),
-                    new SequentialRandomDayPopulation().prepareDate(i), paymentsList);
+            Invoice invoice = new Invoice((long) (i + 1), "Invoice " + (i + 1), 1d, new SequentialRandomDayPopulation().prepareDate(i),
+                    new SequentialRandomDayPopulation().prepareDate(i + 1), paymentsList);
             invoicesList.add(invoice);
             em.persist(invoice);
         }
+        invoicesList.get(invoicesList.size() - 1).setInvoiceCompletedTS(null);
         List<Device> deviceList = new ArrayList<Device>();
         Device nexusOneEmulator = new Device("APA91bHUUQpDH1bdkB7JdXF9aN3inrUrFOhgbLRoicKfvkceB4Vp5px6-TWHi2YUwaFJGXxLghncRdwJ8zBY8dLAAcBwaBQqNn4kP8fSZXAb2q0EAhXa8ClkSJcaOI8q4hmLsuXrL0R4-nBClDnPh2svZu3nQhUw3A");
         Device nexusEmulator = new Device("APA91bEt1UBU-qKxnC-aANxiOR-4zU3QJFN9Pcyv4cRQLY_w1x_4IcwgJNhEps7cUZjG8FFpV7eG13OYeqZueVmHh-9DoCpfwvS9gX4hKDugvmQUbIDpl0KL7O3RP5OLVptGwPlUBtrfGAnFdFTLdLERXdCjNErryw");

@@ -1,7 +1,6 @@
 package com.globallogic.push_service_poc.demo.controller;
 
 import com.globallogic.push_service_poc.demo.bo.InvoicePredictor;
-import com.globallogic.push_service_poc.demo.bo.Predictor;
 import com.globallogic.push_service_poc.demo.entity.Invoice;
 import com.globallogic.push_service_poc.demo.entity.Invoice_;
 import com.globallogic.push_service_poc.demo.entity.User;
@@ -10,6 +9,8 @@ import com.globallogic.push_service_poc.demo.repository.InvoiceRepository;
 import com.globallogic.push_service_poc.demo.repository.UserRepository;
 import com.globallogic.push_service_poc.demo.sender.Message;
 import com.globallogic.push_service_poc.demo.server.AsyncSender;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.ObjectWriter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -52,7 +54,7 @@ public class PredictAndSend {
 
         //Predict invoice completed date for userId 9999
         InvoicePredictor invoicePredictor = new InvoicePredictor();
-        Integer predictedDate = null;
+        Date predictedDate = null;
         if (user != null) {
             predictedDate = invoicePredictor.predictDate(user);
         }
@@ -62,15 +64,16 @@ public class PredictAndSend {
 
         //Create message
         if (predictedDate != null && predictedInvoice != null) {
-            message = new Message.Builder().
-                    addData("invoice", predictedInvoice.toString()).
-                    addData("predictedDate", predictedDate.toString()).
-                    build();
+            ObjectWriter objectWriter = new ObjectMapper().writer();
+            message = new Message.Builder()
+                    .addData("invoice", objectWriter.writeValueAsString(predictedInvoice))
+                    .addData("predictedDate", predictedDate.toString())
+                    .build();
         }
 
         //Send message
         ModelMap modelMap = new ModelMap();
-        modelMap.addAttribute("sentStatus", "Predicted date: " + predictedDate + ". " + asyncSender.sendAll(message));
+        modelMap.addAttribute("sentStatus", "Predicted date: " + predictedDate + "\t" + asyncSender.sendAll(message));
         return modelMap;
     }
 }
