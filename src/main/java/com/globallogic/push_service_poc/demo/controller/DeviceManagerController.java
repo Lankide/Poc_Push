@@ -38,7 +38,7 @@ public class DeviceManagerController {
     ModelMap registerDevice(@RequestParam("userId") Long userId, @RequestParam("deviceId") String deviceId) {
         deviceRepository.registerDevice(userId, deviceId);
         ModelMap modelMap = new ModelMap();
-        modelMap.addAttribute("status", "ok");
+        modelMap.addAttribute("sentStatus", "New device has been registered");
         return modelMap;
     }
 
@@ -48,7 +48,7 @@ public class DeviceManagerController {
     ModelMap unregisterDevice(@RequestParam("userId") Long userId, @RequestParam("deviceId") String deviceId) {
         deviceRepository.unregisterDevice(userId, deviceId);
         ModelMap modelMap = new ModelMap();
-        modelMap.addAttribute("status", "ok");
+        modelMap.addAttribute("sentStatus", "The device has been unregistered");
         return modelMap;
     }
 

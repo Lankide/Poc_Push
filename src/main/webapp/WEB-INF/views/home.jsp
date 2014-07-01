@@ -30,15 +30,21 @@
         <tbody>
 
         <c:forEach var="invoice" items="${user.invoiceList}">
-            <tr>
+            <c:set var="text_class" value="text-success" scope="page"/>
+            <c:if test="${invoice.invoiceCompletedTS == null}">
+                <c:set var="text_class" value="text-warning" scope="page"/>
+            </c:if>
+            <tr class="${pageScope.text_class}">
                 <td class="invoice-cell">${invoice.invoiceName}</td>
-                <td class="invoice-cell"><fmt:formatDate pattern="dd-MM-yyyy"  value="${invoice.invoiceSubmittedTS}"/></td>
-                <td class="invoice-cell"><fmt:formatDate pattern="dd-MM-yyyy"  value="${invoice.invoiceCompletedTS}"/></td>
+                <td class="invoice-cell"><fmt:formatDate pattern="dd-MM-yyyy"
+                                                         value="${invoice.invoiceSubmittedTS}"/></td>
+                <td class="invoice-cell"><fmt:formatDate pattern="dd-MM-yyyy"
+                                                         value="${invoice.invoiceCompletedTS}"/></td>
                 <td class="invoice-cell"></td>
                 <td class="invoice-cell"></td>
             </tr>
             <c:forEach var="payment" items="${invoice.invoicePaymentList}">
-                <tr>
+                <tr class="${pageScope.text_class}">
                     <td class="payment-cell"></td>
                     <td class="payment-cell"></td>
                     <td class="payment-cell"></td>
@@ -67,7 +73,7 @@
                         $('#status').show();
                     },
                     error: function () {
-                        $("#statusmessage").html("Server is unavailable");
+                        $("#status-message").html("Server is unavailable");
                         $('#status').show();
                     }
                 }

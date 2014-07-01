@@ -18,7 +18,7 @@ import java.util.List;
 @Repository
 public class DeviceRepositoryJPA implements DeviceRepository {
 
-    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("mongoDBUnit1");
+    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("mongoDBUnitLocal");
 
     @Inject
     UserRepository userRepository;

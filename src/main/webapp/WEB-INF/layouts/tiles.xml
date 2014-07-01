@@ -4,24 +4,13 @@
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-    <definition name="template" template="/WEB-INF/views/main_template.jsp">
-        <!--<put-attribute name="top"-->
-                       <!--value="/WEB-INF/views/tiles/header.jsp"/>-->
-    </definition>
+    <definition name="template" template="/WEB-INF/views/templates/main_template.jsp"/>
 
-    <definition name="login_template" template="/WEB-INF/views/login_template.jsp">
-        <!--<put-attribute name="top"-->
-                       <!--value="/WEB-INF/views/tiles/header.jsp"/>-->
-    </definition>
+    <definition name="login_template" template="/WEB-INF/views/templates/login_template.jsp" />
 
     <definition name="home" extends="template">
         <put-attribute name="content"
                        value="/WEB-INF/views/home.jsp" />
-    </definition>
-
-    <definition name="sent" extends="template">
-        <put-attribute name="content"
-                       value="/WEB-INF/views/sent.jsp" />
     </definition>
 
     <definition name="manage_devices" extends="template">

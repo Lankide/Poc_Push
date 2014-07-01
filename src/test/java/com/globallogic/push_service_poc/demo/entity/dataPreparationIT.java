@@ -1,5 +1,6 @@
 package com.globallogic.push_service_poc.demo.entity;
 
+import org.eclipse.persistence.tools.schemaframework.DatabaseObjectDefinition;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +22,7 @@ import static org.junit.Assert.assertNotNull;
  */
 public class dataPreparationIT {
 
-    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("mongoDBUnit1");
+    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("mongoDBUnitLocal");
 
     private EntityManager em;
     private EntityTransaction tx;
@@ -70,23 +71,28 @@ public class dataPreparationIT {
 
         tx.begin();
         List<Invoice> invoicesList = new ArrayList<>();
+        double paymentAmount;
+        double invoiceAmount;
         for (int i = 0; i < 25; i++) {
             List<Payment> paymentsList = new ArrayList<>();
+            invoiceAmount = 0;
             for (int j = 0; j < 3; j++) {
-                Payment payment = new Payment(1111l + (long) (j + i * 3), (Double) (Math.random() * 50 + 1),
+                paymentAmount = (Double) (Math.random() * 50 + 1);
+                invoiceAmount += paymentAmount;
+                Payment payment = new Payment(1111l + (long) (j + i * 3), paymentAmount,
                         new RandomDateOfTransaction().prepareDate(2012, 2013),
                         new RandomDateOfTransaction().prepareDate(2012, 2013));
                 paymentsList.add(payment);
                 em.persist(payment);
             }
-            Invoice invoice = new Invoice((long) (i + 1), "Invoice " + (i + 1), 1d, new SequentialRandomDayPopulation().prepareDate(i),
+            Invoice invoice = new Invoice((long) (i + 1), "Invoice " + (i + 1), invoiceAmount, new SequentialRandomDayPopulation().prepareDate(i),
                     new SequentialRandomDayPopulation().prepareDate(i + 1), paymentsList);
             invoicesList.add(invoice);
             em.persist(invoice);
         }
         invoicesList.get(invoicesList.size() - 1).setInvoiceCompletedTS(null);
         List<Device> deviceList = new ArrayList<Device>();
-        Device nexusOneEmulator = new Device("APA91bHUUQpDH1bdkB7JdXF9aN3inrUrFOhgbLRoicKfvkceB4Vp5px6-TWHi2YUwaFJGXxLghncRdwJ8zBY8dLAAcBwaBQqNn4kP8fSZXAb2q0EAhXa8ClkSJcaOI8q4hmLsuXrL0R4-nBClDnPh2svZu3nQhUw3A");
+        Device nexusOneEmulator = new Device("APA91bFUk6a-FkiHD5NWGGI21XHZzahtlMELbidTUKQ40Q5btafH_xzxlIPrfBe1JyKbz0lD_pu-p3rRcGCVLno8OkR_DdnZsqRFj1sriLQK_bijqz3oQirL-eUF2RaKb6n6TjKtvdVz6AIB3f6a_Ksc_h7aKFSmGw");
         Device nexusEmulator = new Device("APA91bEt1UBU-qKxnC-aANxiOR-4zU3QJFN9Pcyv4cRQLY_w1x_4IcwgJNhEps7cUZjG8FFpV7eG13OYeqZueVmHh-9DoCpfwvS9gX4hKDugvmQUbIDpl0KL7O3RP5OLVptGwPlUBtrfGAnFdFTLdLERXdCjNErryw");
         Device realLenovo = new Device("APA91bEDiNzzAbzN3nZCISccaG2pwzBDsof-qmRWYGdLYtD-ZhPVi3wKLrYwPt5ypdzjGp1saL_YGE_Af4LVIH03VF3uEz22C_Ft4txu6xa1qL6uLS21BL0TrI97p5Wexo5CHw-9wWOAJFvETXmCqBaSmwCb791FhQ");
 

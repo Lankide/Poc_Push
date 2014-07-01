@@ -33,7 +33,7 @@
     </nav>
 
     <div class="col-md-offset-1 col-md-10" id="content">
-          <t:insertAttribute name="content"/> <!--<co id="co_tile_content" />-->
+          <t:insertAttribute name="content"/>
     </div>
 </div>
 </body>

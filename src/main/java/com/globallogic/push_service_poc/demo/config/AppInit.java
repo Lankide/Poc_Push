@@ -30,19 +30,6 @@ public class AppInit implements WebApplicationInitializer {
         ServletRegistration.Dynamic dispatcher = servletContext.addServlet("DispatcherServlet", new DispatcherServlet(context));
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/");
-
-//        ServletRegistration.Dynamic registerServlet = servletContext.addServlet("RegisterServlet", new RegisterServlet());
-//        registerServlet.setLoadOnStartup(1);
-//        registerServlet.addMapping("/register");
-//
-//        ServletRegistration.Dynamic sendServlet = servletContext.addServlet("SendServlet", new SendServlet());
-//        sendServlet.setLoadOnStartup(1);
-//        sendServlet.addMapping("/send");
-//
-//        ServletRegistration.Dynamic unregisterServlet = servletContext.addServlet("UnregisterServlet", new UnregisterServlet());
-//        unregisterServlet.setLoadOnStartup(1);
-//        unregisterServlet.addMapping("/unregister");
-
     }
 
     private AnnotationConfigWebApplicationContext getContext() {

@@ -16,7 +16,7 @@ import java.util.List;
 @Repository
 public class UserRepositoryJPA implements UserRepository {
 
-    @PersistenceContext(unitName = "mongoDBUnit2")
+    @PersistenceContext(unitName = "mongoDBUnitJTA")
     private EntityManager em;
 
     @Override

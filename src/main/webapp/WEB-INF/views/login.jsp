@@ -19,17 +19,17 @@
 
                 <legend>Please sign in</legend>
 
-                <%--<c:if test="${param.error != null}">--%>
-                <%--<div class="alert alert-danger">--%>
-                <%--The email or password is incorrect.--%>
-                <%--</div>--%>
-                <%--</c:if>--%>
+                <c:if test="${param.error != null}">
+                    <div class="alert alert-danger">
+                        The email or password is incorrect
+                    </div>
+                </c:if>
 
-                <%--<c:if test="${param.logout != null}">--%>
-                <%--<div class="alert alert-success">--%>
-                <%--You have been logged out.--%>
-                <%--</div>--%>
-                <%--</c:if>--%>
+                <c:if test="${param.logout != null}">
+                    <div class="alert alert-success">
+                        You have been logged out
+                    </div>
+                </c:if>
 
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="email">Email</label>

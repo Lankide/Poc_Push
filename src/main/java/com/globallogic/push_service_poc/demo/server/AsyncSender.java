@@ -3,6 +3,8 @@ package com.globallogic.push_service_poc.demo.server;
 import com.globallogic.push_service_poc.demo.entity.Device;
 import com.globallogic.push_service_poc.demo.entity.User;
 import com.globallogic.push_service_poc.demo.entity.User_;
+import com.globallogic.push_service_poc.demo.repository.DeviceRepository;
+import com.globallogic.push_service_poc.demo.repository.UserRepository;
 import com.globallogic.push_service_poc.demo.sender.*;
 import org.springframework.stereotype.Service;
 
@@ -32,13 +34,15 @@ import java.util.logging.Logger;
 @Service
 public class AsyncSender {
 
+    private static final long TEST_USER_ID = 9999l;
+
     private static final int MULTICAST_SIZE = 1000;
 
-    @PersistenceContext(unitName = "mongoDBUnit2")
+    @PersistenceContext(unitName = "mongoDBUnitJTA")
     private EntityManager em;
 
     private Sender sender;
-    static final boolean DEBUG = true;
+    private static final boolean DEBUG = true;
 
     protected final Logger logger = Logger.getLogger(getClass().getName());
 
@@ -47,6 +51,12 @@ public class AsyncSender {
     @Inject
     ServletContext servletContext;
 
+    @Inject
+    UserRepository userRepository;
+
+    @Inject
+    DeviceRepository deviceRepository;
+
     @PostConstruct
     public void createSender() {
         sender = new Sender((String) servletContext.getAttribute(ApiKeyInitializer.ATTRIBUTE_ACCESS_KEY));
@@ -54,18 +64,10 @@ public class AsyncSender {
 
 
     public String sendAll(Message message) throws ParseException, IOException {
-        List<Device> devices = new LinkedList<>();
 
         // Get all devices of user with id 9999
-        CriteriaBuilder queryBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<User> criteria = queryBuilder.createQuery(User.class);
-        Root<User> userRoot = criteria.from(User.class);
-        criteria.select(userRoot);
-        criteria.where(queryBuilder.equal(userRoot.get(User_.userId), 9999l));
-        List<User> userQueried = em.createQuery(criteria).getResultList();
-        for (User user : userQueried) {
-            devices.addAll(user.getDeviceList());
-        }
+        User user = userRepository.getUser(TEST_USER_ID);
+        List<Device> devices = (user == null) ? new ArrayList<Device>() : user.getDeviceList();
 
         String status;
         if (devices.isEmpty()) {
@@ -84,7 +86,6 @@ public class AsyncSender {
                 int total = devices.size();
                 List<Device> partialDevices = new ArrayList<Device>(total);
                 int counter = 0;
-                int tasks = 0;
                 for (Device device : devices) {
                     counter++;
                     partialDevices.add(device);
@@ -92,14 +93,12 @@ public class AsyncSender {
                     if (partialSize == MULTICAST_SIZE || counter == total) {
                         asyncSend(partialDevices, message);
                         partialDevices.clear();
-                        tasks++;
                     }
                 }
                 status = "Sending message to " + total + " devices";
             }
         }
-
-        return status.toString();
+        return status;
     }
 
     private void asyncSend(List<Device> partialDevices, final Message message) {
@@ -128,16 +127,17 @@ public class AsyncSender {
                                 "; messageId = " + messageId);
                         String canonicalRegId = result.getCanonicalRegistrationId();
                         if (canonicalRegId != null) {
-                            // same device has more than on registration id: update it
+                            // same device has more than on registration id - update it
                             logger.info("canonicalRegId " + canonicalRegId);
-//                            Datastore.updateRegistration(regId, canonicalRegId);
+                            deviceRepository.unregisterDevice(TEST_USER_ID, regId);
+                            deviceRepository.registerDevice(TEST_USER_ID, canonicalRegId);
                         }
                     } else {
                         String error = result.getErrorCodeName();
                         if (error.equals(Constants.ERROR_NOT_REGISTERED)) {
                             // application has been removed from device - unregister it
                             logger.info("Unregistered device: " + regId);
-//                            Datastore.unregister(regId);
+                            deviceRepository.unregisterDevice(TEST_USER_ID, regId);
                         } else {
                             logger.severe("Error sending message to " + regId + ": " + error);
                         }

@@ -20,7 +20,7 @@
 <body>
 <div id="container">
     <div id="content">
-        <t:insertAttribute name="content"/> <!--<co id="co_tile_content" />-->
+        <t:insertAttribute name="content"/>
     </div>
 </div>
 </body>

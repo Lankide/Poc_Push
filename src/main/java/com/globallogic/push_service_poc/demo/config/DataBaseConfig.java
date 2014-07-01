@@ -28,7 +28,7 @@ public class DataBaseConfig {
         entityManagerFactoryBean.setLoadTimeWeaver(new InstrumentationLoadTimeWeaver());
         //entityManagerFactoryBean.setJpaVendorAdapter(vendorAdapter());
 
-        entityManagerFactoryBean.setPersistenceUnitName("mongoDBUnit2");
+        entityManagerFactoryBean.setPersistenceUnitName("mongoDBUnitJTA");
 
         Map<String, Object> jpaProperties = new HashMap<String, Object>();
         jpaProperties.put("eclipselink.weaving", "false");

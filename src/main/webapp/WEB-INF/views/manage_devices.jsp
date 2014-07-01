@@ -5,10 +5,16 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<form class="form-horizontal" id="register-device" action="<s:url value="/device/register"/>" method="POST">
+<form class="form-horizontal" id="register-device">
     <fieldset>
 
         <legend>Register device</legend>
+
+        <div class="alert alert-info alert-dismissable" id="status-register" style="display:none;">
+            <button type="button" class="close" onclick="$('#status-register').hide()"
+                    aria-hidden="true">&times;</button>
+            <div id="status-register-message"></div>
+        </div>
 
         <div class="form-group">
             <label class="col-md-4 control-label" for="userIdRegister">Choose user:</label>
@@ -32,7 +38,7 @@
             <label class="col-md-4 control-label" for="register"></label>
 
             <div class="col-md-8">
-                <input class="btn btn-custom" id="register" type="submit" value="Register">
+                <input class="btn btn-custom" id="register" value="Register">
             </div>
         </div>
     </fieldset>
@@ -42,6 +48,12 @@
     <fieldset>
 
         <legend>Unregister device</legend>
+
+        <div class="alert alert-info alert-dismissable" id="status-unregister" style="display:none;">
+            <button type="button" class="close" onclick="$('#status-unregister').hide()"
+                    aria-hidden="true">&times;</button>
+            <div id="status-unregister-message"></div>
+        </div>
 
         <div class="form-group">
             <label class="col-md-4 control-label" for="userListUnregister">Choose user:</label>
@@ -78,8 +90,48 @@
             <label class="col-md-4 control-label" for="unregister"></label>
 
             <div class="col-md-8">
-                <input class="btn btn-custom" id="unregister" type="submit" value="Unregister">
+                <input class="btn btn-custom" id="unregister" value="Unregister">
             </div>
         </div>
     </fieldset>
 </form>
+
+<script>
+    $('#register').click(function () {
+        $('#status-register').hide();
+        var postData = $('#register-device').serialize();
+        $.ajax({
+                    type: "POST",
+                    url: "<s:url value="/device/register"/>",
+                    data: postData,
+                    success: function (result) {
+                        $("#status-register-message").html(result.sentStatus);
+                        $('#status-register').show();
+                    },
+                    error: function () {
+                        $("#status-register-message").html("Server is unavailable");
+                        $('#status-register').show();
+                    }
+                }
+        )
+    });
+
+    $('#unregister').click(function () {
+        $('#status-unregister').hide();
+        var postData = $('#unregister-device').serialize();
+        $.ajax({
+                    type: "POST",
+                    url: "<s:url value="/device/unregister"/>",
+                    data: postData,
+                    success: function (result) {
+                        $("#status-unregister-message").html(result.sentStatus);
+                        $('#status-unregister').show();
+                    },
+                    error: function () {
+                        $("#status-unregister-message").html("Server is unavailable");
+                        $('#status-unregister').show();
+                    }
+                }
+        )
+    });
+</script>

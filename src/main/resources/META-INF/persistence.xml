@@ -4,7 +4,7 @@
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
              version="2.1">
 
-    <persistence-unit name="mongoDBUnit1" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="mongoDBUnitLocal" transaction-type="RESOURCE_LOCAL">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <!-- <exclude-unlisted-classes>false</exclude-unlisted-classes>-->
         <class>com.globallogic.push_service_poc.demo.entity.Invoice</class>
@@ -12,11 +12,8 @@
         <class>com.globallogic.push_service_poc.demo.entity.Device</class>
         <class>com.globallogic.push_service_poc.demo.entity.Payment</class>
         <properties>
-            <!--
-                drop and create is not supporte on non-relational platforms
-            <property name="javax.persistence.schema-generation.database.action"
-                      value="drop-and-create"/>
-            -->
+            <!-- drop and create is not supporte on non-relational platforms
+                <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/> -->
             <property name="eclipselink.target-database"
                       value="org.eclipse.persistence.nosql.adapters.mongo.MongoPlatform"/>
             <property name="eclipselink.nosql.connection-spec"
@@ -28,7 +25,7 @@
         </properties>
     </persistence-unit>
 
-    <persistence-unit name="mongoDBUnit2" transaction-type="JTA">
+    <persistence-unit name="mongoDBUnitJTA" transaction-type="JTA">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <class>com.globallogic.push_service_poc.demo.entity.Invoice</class>
         <class>com.globallogic.push_service_poc.demo.entity.User</class>
@@ -45,16 +42,4 @@
             <property name="eclipselink.logging.level" value="FINEST"/>
         </properties>
     </persistence-unit>
-
-    <!--    <persistence-unit name="hiberMongoDB" transaction-type="JTA">
-            &lt;!&ndash; Use Hibernate OGM provider: configuration will be transparent &ndash;&gt;
-            <provider>org.hibernate.ogm.jpa.HibernateOgmPersistence</provider>
-            <properties>
-                <property name="hibernate.transaction.jta.platform"
-                          value="org.hibernate.service.jta.platform.internal.JBossStandAloneJtaPlatform" />
-                <property name="hibernate.ogm.datastore.provider"
-                          value="infinispan" />
-            </properties>
-        </persistence-unit>-->
-
 </persistence>
