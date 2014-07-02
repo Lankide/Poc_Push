@@ -6,6 +6,7 @@ import com.globallogic.push_service_poc.demo.entity.User;
 import com.globallogic.push_service_poc.demo.entity.User_;
 import com.globallogic.push_service_poc.demo.repository.DeviceRepository;
 import com.globallogic.push_service_poc.demo.repository.UserRepository;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import javax.inject.Inject;
@@ -14,11 +15,14 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Repository
 public class DeviceRepositoryJPA implements DeviceRepository {
 
     private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("mongoDBUnitLocal");
+
+    private final Logger log = Logger.getLogger(getClass().getName());
 
     @Inject
     UserRepository userRepository;
@@ -32,6 +36,8 @@ public class DeviceRepositoryJPA implements DeviceRepository {
         User user = userRepository.getUser(userId);
         Device device = new Device(deviceId);
         user.getDeviceList().add(device);
+
+        log.info("User devices after adding new: " + StringUtils.join(user.getDeviceList(), ','));
         em.persist(device);
         em.merge(user);
 
@@ -56,6 +62,8 @@ public class DeviceRepositoryJPA implements DeviceRepository {
 
         User user = userRepository.getUser(userId);
         user.getDeviceList().remove(device);
+
+        log.info("User devices after removing one: " + StringUtils.join(user.getDeviceList(), ','));
         em.merge(user);
         em.remove(device);
 

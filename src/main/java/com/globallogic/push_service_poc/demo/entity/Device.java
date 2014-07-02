@@ -8,6 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @NoSql(dataFormat = DataFormatType.MAPPED, dataType = "device")
+@Cacheable(false)
 public class Device {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,7 +36,7 @@ public class Device {
         if (o == this) return true;
         if (!(o instanceof Device)) return false;
         Device device = (Device) o;
-        return this.getDeviceId() == device.getDeviceId();
+        return this.getDeviceId().equals(device.getDeviceId());
     }
 
     //TODO: override ToString

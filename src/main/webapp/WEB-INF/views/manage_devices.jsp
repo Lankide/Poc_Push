@@ -71,7 +71,7 @@
             <div class="col-md-8">
                 <select class="form-control input-md" id="deviceList" name="deviceId">
                     <c:forEach var="device" items="${user.deviceList}">
-                        <option value="${device.deviceId}">
+                        <option value="${device.deviceId}" id="device-list">
                             <c:choose>
                                 <c:when test="${fn:length(device.deviceId) > 20}">
                                     ...${fn:substring(device.deviceId, fn:length(device.deviceId)-21, fn:length(device.deviceId)-1)}
@@ -100,11 +100,13 @@
     $('#register').click(function () {
         $('#status-register').hide();
         var postData = $('#register-device').serialize();
+        var deviceId = $('#deviceId').val();
         $.ajax({
                     type: "POST",
                     url: "<s:url value="/device/register"/>",
                     data: postData,
                     success: function (result) {
+                        $("#deviceList").append('<option value="' + deviceId + '">' + deviceId + '</option>');
                         $("#status-register-message").html(result.sentStatus);
                         $('#status-register').show();
                     },
@@ -119,11 +121,13 @@
     $('#unregister').click(function () {
         $('#status-unregister').hide();
         var postData = $('#unregister-device').serialize();
+        var deviceId = $('#deviceList').val();
         $.ajax({
                     type: "POST",
                     url: "<s:url value="/device/unregister"/>",
                     data: postData,
                     success: function (result) {
+                        $('#deviceList').find('option[value="' + deviceId + '"]').remove();
                         $("#status-unregister-message").html(result.sentStatus);
                         $('#status-unregister').show();
                     },

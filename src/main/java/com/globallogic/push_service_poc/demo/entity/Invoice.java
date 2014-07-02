@@ -16,6 +16,7 @@ import java.util.List;
 
 @Entity
 @NoSql(dataFormat = DataFormatType.MAPPED, dataType = "invoice")
+@Cacheable(false)
 public class Invoice {
 
     @Id

@@ -12,6 +12,7 @@ import java.util.Date;
 /** * Created by arkadii.tetelman on 3/19/14. */
 @Entity
 @NoSql(dataFormat= DataFormatType.MAPPED,dataType="payment")
+@Cacheable(false)
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

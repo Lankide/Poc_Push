@@ -60,13 +60,9 @@
     background-color: inherit;
 }
 
-.table-fixedheader > tbody > tr > td {
-    width: 180px;
-    float: left;
-}
-
+.table-fixedheader > tbody > tr > td,
 .table-fixedheader > thead > tr > th {
-    width: 20%;
+    width: 180px;
     float: left;
 }
 

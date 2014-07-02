@@ -16,6 +16,7 @@ import java.util.List;
  */
 @Entity
 @NoSql(dataFormat = DataFormatType.MAPPED, dataType = "user")
+@Cacheable(false)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
