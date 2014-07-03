@@ -23,10 +23,7 @@ public class DataBaseConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
 
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-      /*  entityManagerFactoryBean.setPackagesToScan(new String[]{this.environment
-                        .getProperty("db.packagesToScan")});*/
         entityManagerFactoryBean.setLoadTimeWeaver(new InstrumentationLoadTimeWeaver());
-        //entityManagerFactoryBean.setJpaVendorAdapter(vendorAdapter());
 
         entityManagerFactoryBean.setPersistenceUnitName("mongoDBUnitJTA");
 
@@ -54,6 +51,4 @@ public class DataBaseConfig {
         transactionManager.setEntityManagerFactory(entityManagerFactoryBean().getObject());
         return transactionManager;
     }*/
-
-
 }

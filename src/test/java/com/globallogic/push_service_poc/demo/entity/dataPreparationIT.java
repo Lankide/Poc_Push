@@ -93,14 +93,17 @@ public class dataPreparationIT {
         invoicesList.get(invoicesList.size() - 1).setInvoiceCompletedTS(null);
         List<Device> deviceList = new ArrayList<Device>();
         Device nexusOneEmulator = new Device("APA91bFUk6a-FkiHD5NWGGI21XHZzahtlMELbidTUKQ40Q5btafH_xzxlIPrfBe1JyKbz0lD_pu-p3rRcGCVLno8OkR_DdnZsqRFj1sriLQK_bijqz3oQirL-eUF2RaKb6n6TjKtvdVz6AIB3f6a_Ksc_h7aKFSmGw");
+        Device romanHTC = new Device("APA91bEdQCzUznJWMcYQ-HyGmGDHMTVDcTAdbU31vCK01i5omM4sgiQkiyskAZBnVkD0BS64MRCTHoOFiDfEqrBOvQnUhE1Gsre4VXI2udso0ncwiPR9xLj8Iqu-_XlhLBD0CPCjfEHfkCtzf7jXhhq_vvIsH9XeZA");
         Device nexusEmulator = new Device("APA91bEt1UBU-qKxnC-aANxiOR-4zU3QJFN9Pcyv4cRQLY_w1x_4IcwgJNhEps7cUZjG8FFpV7eG13OYeqZueVmHh-9DoCpfwvS9gX4hKDugvmQUbIDpl0KL7O3RP5OLVptGwPlUBtrfGAnFdFTLdLERXdCjNErryw");
         Device realLenovo = new Device("APA91bEDiNzzAbzN3nZCISccaG2pwzBDsof-qmRWYGdLYtD-ZhPVi3wKLrYwPt5ypdzjGp1saL_YGE_Af4LVIH03VF3uEz22C_Ft4txu6xa1qL6uLS21BL0TrI97p5Wexo5CHw-9wWOAJFvETXmCqBaSmwCb791FhQ");
 
         em.persist(nexusOneEmulator);
+        em.persist(romanHTC);
         em.persist(nexusEmulator);
         em.persist(realLenovo);
 
         deviceList.add(nexusOneEmulator);
+        deviceList.add(romanHTC);
         deviceList.add(nexusEmulator);
         deviceList.add(realLenovo);
 

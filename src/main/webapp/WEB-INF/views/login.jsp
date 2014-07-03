@@ -53,7 +53,7 @@
                     <label class="col-md-4 control-label" for="submit"></label>
 
                     <div class="col-md-4">
-                        <button id="submit" name="submit" class="btn btn-custom">Sign in</button>
+                        <button id="submit" name="submit" type="submit" class="btn btn-custom">Sign in</button>
                     </div>
                 </div>
 

@@ -15,9 +15,8 @@ public class ViewConfig {
     @Bean
     public TilesConfigurer tilesConfigurer() {
         TilesConfigurer configurer = new TilesConfigurer();
-        configurer.setDefinitions(new String[]
-                {"/WEB-INF/layouts/tiles.xml",
-                        "/WEB-INF/views*//**//*tiles.xml"});
+        configurer.setDefinitions("/WEB-INF/layouts/tiles.xml",
+                "/WEB-INF/views*//**//*tiles.xml");
         configurer.setCheckRefresh(true);
         return configurer;
     }
@@ -25,21 +24,7 @@ public class ViewConfig {
     @Bean
     public TilesViewResolver getTilesViewResolver() {
         TilesViewResolver tilesViewResolver = new TilesViewResolver();
-        /*
-         * tilesViewResolver.setPrefix("/WEB-INF/jsp/");
-         * tilesViewResolver.setSuffix(".jsp");
-         */
         tilesViewResolver.setViewClass(TilesView.class);
         return tilesViewResolver;
     }
-
-
-    // Add bean for InternalResourceViewResolver
-//    @Bean
-//    public InternalResourceViewResolver getInternalResourceViewResolver() {
-//        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-//        resolver.setPrefix("/WEB-INF/pages/");
-//        resolver.setSuffix(".jsp");
-//        return resolver;
-//    }
 }

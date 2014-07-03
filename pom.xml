@@ -62,44 +62,6 @@
             <version>5.0.0.Alpha1</version>
         </dependency>
 
-        <!-- Spring Security -->
-
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-core</artifactId>
-            <version>3.2.4.RELEASE</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-config</artifactId>
-            <version>3.2.4.RELEASE</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-ldap</artifactId>
-            <version>3.2.4.RELEASE</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-web</artifactId>
-            <version>3.2.4.RELEASE</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-openid</artifactId>
-            <version>3.2.4.RELEASE</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-taglibs</artifactId>
-            <version>3.2.4.RELEASE</version>
-        </dependency>
-
         <!-- Joda Time -->
 
         <dependency>
@@ -187,19 +149,6 @@
             <version>2.5</version>
             <scope>provided</scope>
         </dependency>
-
-<!--        <dependency>
-            <groupId>javax.servlet.jsp</groupId>
-            <artifactId>jsp-api</artifactId>
-            <version>2.1</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
-        </dependency>-->
 
         <dependency>
             <groupId>org.springframework</groupId>
@@ -290,30 +239,30 @@
                     <target>1.7</target>
                     <encoding>UTF-8</encoding>
 
-                        <proc combine.self="override">only</proc>
-                        <!-- compilerArguments can be removed if there is only one -->
-                        <!-- PU in the project or eclipselink.canonicalmodel.subpackage -->
-                        <!-- has been defined for each additional PU added in-->
-                        <compilerArguments combine.children="append">
-                            <Aeclipselink.persistenceunits>
-                                mongoDBUnit1
-                            </Aeclipselink.persistenceunits>
-                        </compilerArguments>
+                    <proc combine.self="override">only</proc>
+                    <!-- compilerArguments can be removed if there is only one -->
+                    <!-- PU in the project or eclipselink.canonicalmodel.subpackage -->
+                    <!-- has been defined for each additional PU added in-->
+                    <compilerArguments combine.children="append">
+                        <Aeclipselink.persistenceunits>
+                            mongoDBUnit1
+                        </Aeclipselink.persistenceunits>
+                    </compilerArguments>
 
-                        <!-- edit the unique directory path to match where the -->
-                        <!-- JPA entities exist -->
-<!--                        <includes combine.self="override">
-                            <include>**/entity/jpa/*.java</include>
-                        </includes>-->
-                        <generatedSourcesDirectory>
-                            ${project.build.directory}/generated-sources/metamodel
-                        </generatedSourcesDirectory>
-                        <annotationProcessors combine.self="override">
-                            <annotationProcessor>
-                                org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor
-                            </annotationProcessor>
-                        </annotationProcessors>
-                    </configuration>
+                    <!-- edit the unique directory path to match where the -->
+                    <!-- JPA entities exist -->
+                    <!--                        <includes combine.self="override">
+                                                <include>**/entity/jpa/*.java</include>
+                                            </includes>-->
+                    <generatedSourcesDirectory>
+                        ${project.build.directory}/generated-sources/metamodel
+                    </generatedSourcesDirectory>
+                    <annotationProcessors combine.self="override">
+                        <annotationProcessor>
+                            org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor
+                        </annotationProcessor>
+                    </annotationProcessors>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -348,7 +297,7 @@
                 </configuration>
             </plugin>
 
-<!--            <plugin>
+            <plugin>
                 <groupId>org.bsc.maven</groupId>
                 <artifactId>maven-processor-plugin</artifactId>
                 <version>2.2.4</version>
@@ -362,53 +311,54 @@
                         <configuration>
                             <outputDirectory>${project.build.directory}/generated-sources/metamodel</outputDirectory>
                             <compilerArguments>
-                                    -Aeclipselink.persistencexml=/src/main/resources/META-INF/persistence.xml
+                                -Aeclipselink.persistencexml=/src/main/resources/META-INF/persistence.xml
                                 <Aeclipselink.persistenceunits>
-                                    mongoDBUnit1
+                                    mongoDBUnitLocal
+                                    mongoDBUnitJTA
                                 </Aeclipselink.persistenceunits>
                             </compilerArguments>
                             <processors>
-                                <processor>org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor</processor>
+                                <processor>org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor
+                                </processor>
                             </processors>
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>-->
+            </plugin>
+
             <!-- autodeploy for glassfish server -->
 
-  <!--          <plugin>
-                <groupId>org.glassfish.maven.plugin</groupId>
-                <artifactId>maven-glassfish-plugin</artifactId>
-                <version>2.1</version>
-                <configuration>
-                    <glassfishDirectory>${glassfish.glassfishDirectory}</glassfishDirectory>
-                    <user>admin</user>
-                    <adminPassword>admin</adminPassword>
-                    <domain>
-                        <name>domain1</name>
-                        <httpPort>8080</httpPort>
-                        <adminPort>4848</adminPort>
-                    </domain>
-                    <components>
-                        <component>
-                            <name>${project.artifactId}</name>
-                            <artifact>target/${project.build.finalName}.war</artifact>
-                        </component>
-                    </components>
-                    <debug>true</debug>
-                    <terse>false</terse>
-                    <echo>true</echo>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>deploy</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>-->
+            <!--          <plugin>
+                          <groupId>org.glassfish.maven.plugin</groupId>
+                          <artifactId>maven-glassfish-plugin</artifactId>
+                          <version>2.1</version>
+                          <configuration>
+                              <glassfishDirectory>${glassfish.glassfishDirectory}</glassfishDirectory>
+                              <user>admin</user>
+                              <adminPassword>admin</adminPassword>
+                              <domain>
+                                  <name>domain1</name>
+                                  <httpPort>8080</httpPort>
+                                  <adminPort>4848</adminPort>
+                              </domain>
+                              <components>
+                                  <component>
+                                      <name>${project.artifactId}</name>
+                                      <artifact>target/${project.build.finalName}.war</artifact>
+                                  </component>
+                              </components>
+                              <debug>true</debug>
+                              <terse>false</terse>
+                              <echo>true</echo>
+                          </configuration>
+                          <executions>
+                              <execution>
+                                  <goals>
+                                      <goal>deploy</goal>
+                                  </goals>
+                              </execution>
+                          </executions>
+                      </plugin>-->
         </plugins>
     </build>
-
-
 </project>

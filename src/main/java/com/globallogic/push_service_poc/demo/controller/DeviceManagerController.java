@@ -27,7 +27,7 @@ public class DeviceManagerController {
     private DeviceRepository deviceRepository;
 
     @RequestMapping(value = "/manage", method = RequestMethod.GET)
-    public String printWelcome(ModelMap model) throws ParseException {
+    public String getManageDevicePage(ModelMap model) throws ParseException {
         model.addAttribute("user", userRepository.getUser(9999l));
         return "manage_devices";
     }

@@ -14,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 @EnableWebMvc //this is the same as <mvc:annotation-driven/>
 @Import({DataBaseConfig.class, ViewConfig.class})
-@ComponentScan(basePackages = {"com.globallogic.push_service_poc.demo"}) //his is the same as <context:component-scan base-package=”
+@ComponentScan(basePackages = {"com.globallogic.push_service_poc.demo.*"}) //his is the same as <context:component-scan base-package=”
 /**
  *  Extend the class to use WebMvcConfigurerAdapter.
  *  This adds stub implementations from the WebMvcConfigurer interface which is used by @EnableWebMVC.

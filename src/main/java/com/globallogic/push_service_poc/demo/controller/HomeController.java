@@ -20,7 +20,7 @@ public class HomeController {
     private UserRepository userRepository;
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public String printWelcome(ModelMap model) throws ParseException {
+    public String getHomePage(ModelMap model) throws ParseException {
         model.addAttribute("user", userRepository.getUser(9999l));
         return "home";
     }
